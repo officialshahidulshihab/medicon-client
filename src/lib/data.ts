@@ -3,3 +3,11 @@ export const getFeaturedDoctor = async () => {
   const data = await res.json();
   return data;
 };
+
+
+export const getAllReview=async()=>{
+  const res=await fetch("http://localhost:5000/review")
+  const data=await res.json()
+  return data;
+
+}
