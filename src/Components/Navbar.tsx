@@ -12,7 +12,7 @@ import { PiSignOutLight } from "react-icons/pi";
 const Navbar = () => {
   const NAV_LINKS = [
     { label: "Home", href: "/" },
-    { label: "Find Doctors", href: "/find-doctors" },
+    { label: "Find Doctors", href: "/doctors" },
     { label: "About Us", href: "/about" },
   ];
   const pathname = usePathname();
@@ -53,7 +53,7 @@ const Navbar = () => {
               <FaStethoscope />
             </div>
             <span className="text-white font-bold text-lg tracking-tight">
-              MedConnect <span style={{ color: "#00b4d8" }}>BD</span>
+              Medi<span style={{ color: "#00b4d8" }}>Con</span>
             </span>
           </Link>
 

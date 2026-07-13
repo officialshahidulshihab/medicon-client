@@ -1,5 +1,6 @@
 import Banner from "@/Components/Banner";
 import FeaturedSection from "@/Components/FeaturedSection";
+import NewsShelter from "@/Components/NewsShelter";
 import SimpleSteps from "@/Components/SimpleSteps";
 import Specialities from "@/Components/Specialities";
 import StatSection from "@/Components/StatSection";
@@ -15,6 +16,7 @@ export default function Home() {
     <SimpleSteps></SimpleSteps>
     <StatSection></StatSection>
     <TestimonialsSection></TestimonialsSection>
+    <NewsShelter></NewsShelter>
     </>
   );
 }

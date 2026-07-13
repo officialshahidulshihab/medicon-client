@@ -64,7 +64,7 @@ const SignUpPage = () => {
           <FaStethoscope />
         </div>
         <h1 className="text-white text-3xl font-bold tracking-tight">
-          MedConnect BD
+          MediCon
         </h1>
         <p className="text-[#4fa3c0] text-sm mt-1">
           Bangladesh's most trusted health platform

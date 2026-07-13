@@ -1,21 +1,9 @@
+import { Doctor } from "@/lib/data";
 import Image from "next/image";
 import { CiHospital1 } from "react-icons/ci";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdWorkspacePremium } from "react-icons/md";
 
-type Doctor = {
-  _id: string;
-  name: string;
-  specialty: string;
-  hospital: string;
-  location: string;
-  experience: number;
-  consultationFee: number;
-  photo: string;
-  rating: number;
-  totalReviews: number;
-  isAvailable: boolean;
-};
 
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
   return (
@@ -68,9 +56,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
 
         <div className="flex items-center justify-between border-t border-white/10 pt-3 gap-2">
           <div>
-            <span className="text-gray-500 text-[11px] block">
-              Consultation
-            </span>
+            <span className="text-gray-500 text-[11px] block">Consultation</span>
             <span className="text-white font-bold text-[15px]">
               ৳ {doctor.consultationFee.toLocaleString()}
             </span>
@@ -81,9 +67,9 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
             </button>
             <button
               disabled={!doctor.isAvailable}
-              className={`text-xs px-4 py-1.5 rounded-lg font-semibold transition-colors cursor-pointer ${
+              className={`text-xs px-4 py-1.5 rounded-lg font-semibold transition-colors ${
                 doctor.isAvailable
-                  ? "bg-cyan-500 text-white hover:bg-cyan-600"
+                  ? "bg-cyan-500 text-white hover:bg-cyan-600 cursor-pointer"
                   : "bg-gray-600 text-gray-400 cursor-not-allowed"
               }`}
             >

@@ -54,7 +54,7 @@ const TestimonialsSection = async () => {
         </h2>
         <p className="text-base max-w-xl mx-auto" style={{ color: "#4e7a9f" }}>
           Real experiences from real patients across Bangladesh who found their
-          doctors on MedConnect BD.
+          doctors on MediCon.
         </p>
       </div>
 
