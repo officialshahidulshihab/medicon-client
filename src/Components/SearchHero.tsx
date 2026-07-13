@@ -39,7 +39,7 @@ const SearchHero = ({
       </p>
  
       <div className="flex flex-col sm:flex-row gap-3 max-w-3xl">
-        {/* Search input */}
+       
         <div className="relative flex-1">
           <FiSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" />
           <input
@@ -51,7 +51,7 @@ const SearchHero = ({
           />
         </div>
  
-        {/* Division picker — reuses the shared Dropdown */}
+       
         <DropDown
           label=""
           options={DIVISIONS}

@@ -30,7 +30,7 @@ const ResultsToolBar = ({ count, sortBy, setSortBy, viewMode, setViewMode }: Pro
           onChange={setSortBy}
         />
  
-        {/* Grid / List toggle */}
+       
         <div className="flex items-center bg-[#131b2e] border border-white/10 rounded-xl p-1 gap-0.5">
           <button
             onClick={() => setViewMode("grid")}

@@ -64,7 +64,7 @@ const FilterSideBar = ({
      const feePercent = (maxFee / 5000) * 100;
     return (
           <aside className="w-full lg:w-[260px] shrink-0 flex flex-col gap-3">
-      {/* Specialty */}
+      
       <CollapsibleSection title="Specialty">
         <ul className="flex flex-col gap-0.5">
           {SPECIALTIES.map((s) => (
@@ -84,7 +84,7 @@ const FilterSideBar = ({
         </ul>
       </CollapsibleSection>
  
-      {/* Max Fee */}
+    
       <CollapsibleSection title="Max Consultation Fee">
         <div className="flex justify-between text-xs mb-3">
           <span className="text-gray-500">৳ 0</span>
@@ -111,7 +111,7 @@ const FilterSideBar = ({
         />
       </CollapsibleSection>
  
-      {/* Minimum Rating */}
+      
       <CollapsibleSection title="Minimum Rating">
         <div className="flex flex-wrap gap-2">
           {RATING_OPTIONS.map((r) => (
@@ -130,7 +130,7 @@ const FilterSideBar = ({
         </div>
       </CollapsibleSection>
  
-      {/* Reset */}
+      
       <button
         onClick={onReset}
         className="w-full py-2.5 rounded-2xl border border-white/10 bg-[#131b2e] text-cyan-400 text-sm font-semibold hover:bg-white/5 transition-colors cursor-pointer"

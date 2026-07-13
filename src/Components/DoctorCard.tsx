@@ -1,11 +1,12 @@
 import { Doctor } from "@/lib/data";
 import Image from "next/image";
+import Link from "next/link";
 import { CiHospital1 } from "react-icons/ci";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdWorkspacePremium } from "react-icons/md";
 
-
 const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
+  const id = doctor._id;
   return (
     <div className="w-full rounded-2xl border border-white/10 bg-[#131b2e] overflow-hidden font-sans">
       <div className="relative h-56">
@@ -56,15 +57,19 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
 
         <div className="flex items-center justify-between border-t border-white/10 pt-3 gap-2">
           <div>
-            <span className="text-gray-500 text-[11px] block">Consultation</span>
+            <span className="text-gray-500 text-[11px] block">
+              Consultation
+            </span>
             <span className="text-white font-bold text-[15px]">
               ৳ {doctor.consultationFee.toLocaleString()}
             </span>
           </div>
           <div className="flex gap-2">
-            <button className="text-xs px-3 py-1.5 rounded-lg border border-white/20 text-gray-300 hover:bg-white/10 transition-colors cursor-pointer">
-              Profile
-            </button>
+            <Link href={`/doctors/${id}`}>
+              <button className="text-xs px-3 py-1.5 rounded-lg border border-white/20 text-gray-300 hover:bg-white/10 transition-colors cursor-pointer">
+                Profile
+              </button>
+            </Link>
             <button
               disabled={!doctor.isAvailable}
               className={`text-xs px-4 py-1.5 rounded-lg font-semibold transition-colors ${

@@ -8,7 +8,7 @@ type Props = {
   options: string[];
   value: string;
   onChange: (v: string) => void;
-  prefix?: React.ReactNode; // optional icon before label
+  prefix?: React.ReactNode; 
 };
  
 const DropDown = ({ label, options, value, onChange, prefix }: Props) => {

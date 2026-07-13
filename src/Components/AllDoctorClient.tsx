@@ -6,13 +6,15 @@ import FilterSideBar from "@/Components/FilterSideBar";
 import ResultsToolBar from "@/Components/ResultsToolBar";
 import SearchHero from "@/Components/SearchHero";
 import { Doctor } from "@/lib/data";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 
 const DOCTORS_PER_PAGE = 6;
 
 const AllDoctorClient = ({ doctors }: { doctors: Doctor[] }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDivision, setSelectedDivision] = useState("All Divisions");
-
+ const searchParams = useSearchParams();
 
   const [selectedSpecialty, setSelectedSpecialty] = useState("All Specialties");
   const [maxFee, setMaxFee] = useState(5000);
@@ -24,6 +26,16 @@ const AllDoctorClient = ({ doctors }: { doctors: Doctor[] }) => {
 
 
   const [currentPage, setCurrentPage] = useState(1);
+
+  useEffect(() => {
+    const specialty = searchParams.get("specialty");
+    const search = searchParams.get("search");
+    const division = searchParams.get("division");
+
+    if (specialty) setSelectedSpecialty(specialty);
+    if (search) setSearchQuery(search);
+    if (division) setSelectedDivision(division);
+  }, [searchParams]);
 
 
 

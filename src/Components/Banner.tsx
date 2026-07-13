@@ -7,6 +7,7 @@ import { HiOutlineSparkles } from "react-icons/hi";
 import { IoIosSearch } from "react-icons/io";
 import { MdVerifiedUser } from "react-icons/md";
 import React, { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 const Banner = () => {
   const DIVISIONS = [
     "Dhaka",
@@ -22,28 +23,35 @@ const Banner = () => {
   const [division, setDivision] = useState("Dhaka");
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
-  
- useEffect(() => {
-  const handler = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setOpen(false);
-    }
-  };
-  document.addEventListener("mousedown", handler);
-  return () => document.removeEventListener("mousedown", handler);
-}, []);
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
 
+   const handleSearch = () => {
+    const params = new URLSearchParams();
+    if (searchQuery) params.set("search", searchQuery);
+    if (division !== "Dhaka") params.set("division", division);
+    router.push(`/doctors?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   return (
     <section
-      className="relative w-full overflow-hidden"
+      className="relative w-full "
       style={{
         background:
           "radial-gradient(ellipse at 30% 50%, #0e2235 0%, #07111e 50%, #040a14 100%)",
         minHeight: "calc(100vh - 64px)",
       }}
     >
-      
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -54,7 +62,6 @@ const Banner = () => {
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-0 py-16 lg:py-0 lg:min-h-[calc(100vh-64px)]">
-        
         <div className="flex-1 flex flex-col items-start lg:pr-12 z-10">
           {/* Trust badge */}
           <div
@@ -70,7 +77,6 @@ const Banner = () => {
             </span>
           </div>
 
-       
           <h1
             className="text-white font-extrabold leading-[1.1] mb-5"
             style={{ fontSize: "clamp(2.4rem, 5vw, 3.6rem)" }}
@@ -82,13 +88,11 @@ const Banner = () => {
             in Bangladesh
           </h1>
 
-         
           <p className="text-[#7aafc9] text-base leading-relaxed mb-8 max-w-md">
             Book appointments with verified specialist doctors across all 8
             divisions. Real profiles, real reviews, real care — instantly.
           </p>
 
-          
           <div
             className="flex items-center w-full max-w-xl rounded-full p-1.5 gap-1"
             style={{
@@ -97,33 +101,32 @@ const Banner = () => {
               boxShadow: "0 4px 24px rgba(0,0,0,0.3)",
             }}
           >
-           
             <div className="flex items-center gap-2.5 flex-1 px-4">
               <IoIosSearch className="text-[#0ea5e9]" />
               <input
                 type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSearch()}
                 placeholder="Specialty, doctor name..."
                 className="bg-transparent text-white text-sm outline-none w-full placeholder-[#3a6080]"
               />
             </div>
 
-          
             <div
               className="w-px self-stretch"
               style={{ background: "rgba(30,58,95,0.8)" }}
             />
 
-          
             <div
-            ref={dropdownRef} 
+              ref={dropdownRef}
               className="relative flex items-center gap-2 px-4 cursor-pointer"
-               onClick={() => setOpen(!open)}
+              onClick={() => setOpen(!open)}
             >
               <CiLocationOn color="#00b4d8" />
               <span className="text-[#c8dae8] text-sm">{division}</span>
               <FaChevronDown size={10} color="#7aafc9" className="" />
 
-              
               {open && (
                 <div
                   className="absolute top-10 left-0 z-50 rounded-xl overflow-hidden py-1"
@@ -138,7 +141,6 @@ const Banner = () => {
                     <div
                       key={d}
                       onClick={(e) => {
-                       
                         setDivision(d);
                         setOpen(false);
                       }}
@@ -168,8 +170,8 @@ const Banner = () => {
               )}
             </div>
 
-           
             <button
+            onClick={handleSearch}
               className="flex items-center gap-2 px-5 py-3 rounded-full text-white font-bold text-sm transition-opacity hover:opacity-90"
               style={{
                 background: "linear-gradient(90deg, #00b4d8, #0096c7)",
@@ -181,16 +183,15 @@ const Banner = () => {
             </button>
           </div>
 
-          
           <div className="flex items-center gap-6 mt-8 flex-wrap">
             <div className="flex items-center gap-2">
-              <MdVerifiedUser className=" text-[#00bb82]"/>
+              <MdVerifiedUser className=" text-[#00bb82]" />
               <span className="text-[#c8dae8] text-sm">
                 <strong className="text-white">500+</strong> Verified Doctors
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <CiLocationOn className="text-[#0c91cf]"/>
+              <CiLocationOn className="text-[#0c91cf]" />
               <span className="text-[#c8dae8] text-sm">
                 <strong className="text-white">8</strong> Divisions
               </span>
@@ -204,7 +205,6 @@ const Banner = () => {
           </div>
         </div>
 
-        
         <div className="flex-1 flex items-center justify-center relative lg:justify-end lg:flex-[1.3]">
           <div className="relative" style={{ width: 520, maxWidth: "100%" }}>
             {/* Main photo card */}
@@ -217,7 +217,6 @@ const Banner = () => {
                 boxShadow: "0 24px 64px rgba(0,0,0,0.5)",
               }}
             >
-              
               <Image
                 src="/doctor-hero.jpg"
                 alt="Dr. Farhan Ahmed — Senior Cardiologist"
@@ -230,7 +229,6 @@ const Banner = () => {
                 }}
               />
 
-              
               <div
                 className="absolute inset-0 -z-10"
                 style={{
@@ -239,7 +237,6 @@ const Banner = () => {
                 }}
               />
 
-             
               <div
                 className="absolute bottom-0 left-0 right-0 px-5 py-4"
                 style={{
@@ -263,7 +260,7 @@ const Banner = () => {
                       Square Hospital, Dhaka
                     </p>
                   </div>
-                 
+
                   <div
                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-full"
                     style={{
@@ -280,7 +277,6 @@ const Banner = () => {
               </div>
             </div>
 
-            
             <div
               className="absolute -left-5 top-8 px-4 py-3 rounded-2xl"
               style={{
@@ -295,7 +291,6 @@ const Banner = () => {
               <div className="text-[#5a8aaa] text-xs mt-0.5">Years Exp.</div>
             </div>
 
-            
             <div
               className="absolute -right-5 top-20 px-4 py-3 rounded-2xl"
               style={{
@@ -310,7 +305,6 @@ const Banner = () => {
               <div className="text-[#5a8aaa] text-xs mt-0.5">Reviews</div>
             </div>
 
-            
             <div
               className="absolute -right-5 bottom-28 flex items-center gap-2 px-4 py-2.5 rounded-full"
               style={{

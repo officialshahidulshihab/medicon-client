@@ -1,5 +1,7 @@
 "use client";
 
+
+import { useRouter } from "next/navigation";
 import {
   FaHeartbeat,
   FaBrain,
@@ -11,14 +13,14 @@ import {
 import { GiStethoscope } from "react-icons/gi";
 import { MdWaves } from "react-icons/md";
 
-// ─── Specialty Data ───────────────────────────────────────────────────────────
+
 
 const SPECIALTIES = [
   {
-    name: "Cardiology",
+    name: "Cardiologist",
     doctors: 48,
     icon: FaHeartbeat,
-    // card bg, border color, icon circle bg, icon color
+   
     cardBg: "rgba(80, 10, 10, 0.55)",
     border: "rgba(220, 50, 50, 0.25)",
     hoverBorder: "rgba(220, 50, 50, 0.6)",
@@ -26,7 +28,7 @@ const SPECIALTIES = [
     iconColor: "#f87171",
   },
   {
-    name: "Neurology",
+    name: "Neurologist",
     doctors: 32,
     icon: FaBrain,
     cardBg: "rgba(30, 20, 80, 0.55)",
@@ -36,7 +38,7 @@ const SPECIALTIES = [
     iconColor: "#a78bfa",
   },
   {
-    name: "Ophthalmology",
+    name: "Ophthalmologist",
     doctors: 29,
     icon: FaEye,
     cardBg: "rgba(5, 50, 55, 0.55)",
@@ -46,7 +48,7 @@ const SPECIALTIES = [
     iconColor: "#2dd4bf",
   },
   {
-    name: "Pediatrics",
+    name: "Pediatrician",
     doctors: 41,
     icon: FaBaby,
     cardBg: "rgba(60, 10, 60, 0.55)",
@@ -66,7 +68,7 @@ const SPECIALTIES = [
     iconColor: "#34d399",
   },
   {
-    name: "Dermatology",
+    name: "Dermatologist",
     doctors: 37,
     icon: FaShieldAlt,
     cardBg: "rgba(55, 30, 5, 0.55)",
@@ -76,7 +78,7 @@ const SPECIALTIES = [
     iconColor: "#fb923c",
   },
   {
-    name: "Gynecology",
+    name: "Gynecologist",
     doctors: 44,
     icon: MdWaves,
     cardBg: "rgba(30, 10, 70, 0.55)",
@@ -86,7 +88,7 @@ const SPECIALTIES = [
     iconColor: "#c084fc",
   },
   {
-    name: "Orthopedics",
+    name: "Orthopedic Surgeon",
     doctors: 56,
     icon: FaBone,
     cardBg: "rgba(45, 40, 5, 0.55)",
@@ -97,13 +99,20 @@ const SPECIALTIES = [
   },
 ];
 
-// ─── Card Component ───────────────────────────────────────────────────────────
+
 
 const SpecialtyCard = ({ specialty }) => {
   const Icon = specialty.icon;
+const router = useRouter();
+  
 
+  const handleClick =async () => {
+    
+    router.push(`/doctors?specialty=${encodeURIComponent(specialty.name)}`);
+  };
   return (
     <div
+    onClick={handleClick}
       className="group flex flex-col items-center justify-center gap-4 p-8 rounded-2xl cursor-pointer transition-all duration-300"
       style={{
         background: specialty.cardBg,
@@ -120,7 +129,7 @@ const SpecialtyCard = ({ specialty }) => {
         e.currentTarget.style.boxShadow = "none";
       }}
     >
-      {/* Icon circle */}
+      
       <div
         className="w-14 h-14 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
         style={{ background: specialty.circleBg }}
@@ -128,7 +137,7 @@ const SpecialtyCard = ({ specialty }) => {
         <Icon size={24} color={specialty.iconColor} />
       </div>
 
-      {/* Text */}
+     
       <div className="text-center">
         <h3 className="text-white font-bold text-base mb-1">
           {specialty.name}
@@ -154,7 +163,7 @@ const Specialities = () => {
       }}
     >
       <div className="max-w-7xl mx-auto">
-        {/* ── Section Header ── */}
+      
         <div className="text-center mb-14">
           <p
             className="text-xs font-bold uppercase tracking-widest mb-3"
@@ -171,7 +180,7 @@ const Specialities = () => {
           </p>
         </div>
 
-        {/* ── Cards Grid ── */}
+   
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {SPECIALTIES.map((specialty) => (
             <SpecialtyCard key={specialty.name} specialty={specialty} />
