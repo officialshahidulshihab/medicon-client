@@ -6,7 +6,7 @@ import { LuUsers } from "react-icons/lu";
 import { PiStethoscope } from "react-icons/pi";
 import { TbMapPin } from "react-icons/tb";
 import { MdOutlineStar } from "react-icons/md";
-import StatCard, { type Stat } from "./StatCard"; // ← import the shared type too
+import StatCard, { type Stat } from "./StatCard"; 
 
 
 const stats: Stat[] = [

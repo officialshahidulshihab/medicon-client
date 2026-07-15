@@ -31,7 +31,7 @@ const useCounter = (
     const timer = setInterval(() => {
       current += 1;
       const progress = current / steps;
-      const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       setCount(parseFloat((eased * target).toFixed(decimals)));
       if (current >= steps) {
         setCount(target);

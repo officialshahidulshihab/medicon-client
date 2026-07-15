@@ -8,7 +8,7 @@ import DropDown from "./DropDown";
 const DIVISIONS = [
   "All Divisions",
   "Dhaka",
-  "Chittagong",
+  "Chattogram",
   "Sylhet",
   "Rajshahi",
   "Khulna",

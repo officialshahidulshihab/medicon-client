@@ -103,7 +103,7 @@ const SimpleSteps = () => {
             >
               
               <div className="relative mb-7">
-                {/* Glow behind box */}
+               
                 <div
                   className="absolute inset-0 rounded-2xl blur-xl opacity-30"
                   style={{ backgroundColor: "#1e5aff" }}

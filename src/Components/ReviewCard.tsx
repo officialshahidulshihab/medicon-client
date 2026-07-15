@@ -10,7 +10,7 @@ export interface IReview {
   reviewerName: string;
   reviewerLocation: string;
   reviewerAvatar: string;
-  rating: number;       // 1 – 5
+  rating: number;      
   doctorSeen: string;
   specialty: string;
   isVerified: boolean;

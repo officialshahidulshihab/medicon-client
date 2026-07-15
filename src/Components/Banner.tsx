@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 const Banner = () => {
   const DIVISIONS = [
     "Dhaka",
-    "Chittagong",
+    "Chattogram",
     "Rajshahi",
     "Khulna",
     "Barishal",
@@ -63,7 +63,7 @@ const Banner = () => {
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-12 lg:gap-0 py-16 lg:py-0 lg:min-h-[calc(100vh-64px)]">
         <div className="flex-1 flex flex-col items-start lg:pr-12 z-10">
-          {/* Trust badge */}
+          
           <div
             className="flex items-center gap-2 px-4 py-2 rounded-full mb-6"
             style={{
@@ -207,7 +207,7 @@ const Banner = () => {
 
         <div className="flex-1 flex items-center justify-center relative lg:justify-end lg:flex-[1.3]">
           <div className="relative" style={{ width: 520, maxWidth: "100%" }}>
-            {/* Main photo card */}
+           
             <div
               className="relative rounded-3xl overflow-hidden"
               style={{
@@ -223,7 +223,7 @@ const Banner = () => {
                 fill
                 className="object-cover object-top"
                 priority
-                // Fallback gradient shown if image missing
+             
                 onError={(e) => {
                   e.currentTarget.style.display = "none";
                 }}

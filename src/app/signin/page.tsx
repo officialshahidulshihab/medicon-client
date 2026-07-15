@@ -98,7 +98,7 @@ const SignInPage = () => {
 
       
         <form onSubmit={handleSubmit}>
-          {/* Email */}
+       
           <div className="mb-4">
             <label className="block text-white text-sm font-semibold mb-2">
               Email Address

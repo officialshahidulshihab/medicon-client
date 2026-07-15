@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CiHospital1 } from "react-icons/ci";
 import { IoLocationOutline, IoTimeOutline } from "react-icons/io5";
@@ -8,7 +8,9 @@ import { MdWorkspacePremium, MdVerified } from "react-icons/md";
 import { BsChatSquareText } from "react-icons/bs";
 import { FaCheckCircle } from "react-icons/fa";
 import DoctorCard from "@/Components/DoctorCard";
-import { Doctor } from "@/lib/data";
+import { Doctor, getTimeSlot } from "@/lib/data";
+import { authClient } from "@/lib/auth-client";
+import { toast } from "react-toastify";
 
 export interface Review {
   name: string;
@@ -80,20 +82,81 @@ function StarRating({
 function BookingWidget({
   fee,
   isAvailable,
+  doctorId,
 }: {
   fee: number;
   isAvailable: boolean;
+  doctorId: string;
 }) {
   const dates = getNextAvailableDates(3);
   const [selectedDate, setSelectedDate] = useState(dates[0].value);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
 
-  const handleConfirm = () => {
+  useEffect(() => {
+    const getUser = async () => {
+      const { data: session } = await authClient.getSession();
+      setUserId(session?.user?.id ?? null);
+    };
+    getUser();
+  }, []);
+
+  useEffect(() => {
+    const fetchSlots = async () => {
+      try {
+        console.log("Fetching slots for:", doctorId, selectedDate); 
+        const data = await getTimeSlot(doctorId, selectedDate);
+        console.log("Response:", data); 
+        setBookedSlots(data.bookedSlots ?? []);
+      } catch (err) {
+        console.error("Slot fetch error:", err); 
+        setBookedSlots([]);
+      }
+    };
+    fetchSlots();
+  }, [doctorId, selectedDate]);
+
+  const handleConfirm = async () => {
     if (!selectedSlot) {
-      alert("Please select a time slot first.");
+      toast.error("Please select a time slot first.");
       return;
     }
-    alert(`Appointment booked for ${selectedDate} at ${selectedSlot}`);
+
+    if (!userId) {
+      toast.error("Please sign in to book.");
+      return;
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/appointments`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        doctorId,
+        userId,
+        date: selectedDate,
+        timeSlot: selectedSlot,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (res.status === 409) {
+      toast.error("This slot was just taken! Please choose another.");
+      
+      const updated = await getTimeSlot(doctorId, selectedDate);
+      setBookedSlots(updated.bookedSlots ?? []);
+      setSelectedSlot(null);
+      return;
+    }
+
+    if (res.ok) {
+      toast.success(`Appointment booked for ${selectedDate} at ${selectedSlot}`);
+      
+      const updated = await getTimeSlot(doctorId, selectedDate);
+      setBookedSlots(updated.bookedSlots ?? []);
+      setSelectedSlot(null);
+    }
   };
 
   return (
@@ -137,20 +200,26 @@ function BookingWidget({
 
         <p className="text-white text-sm font-semibold mb-2">Available Slots</p>
         <div className="grid grid-cols-2 gap-2 mb-5">
-          {TIME_SLOTS.map((slot) => (
-            <button
-              key={slot}
-              onClick={() => setSelectedSlot(slot)}
-              className={`flex items-center gap-1.5 text-xs py-2.5 px-3 rounded-lg border transition-all cursor-pointer ${
-                selectedSlot === slot
-                  ? "bg-cyan-500/20 border-cyan-400 text-cyan-300 font-semibold"
-                  : "border-white/10 text-gray-400 hover:border-white/25 hover:text-white"
-              }`}
-            >
-              <IoTimeOutline className="text-sm shrink-0" />
-              {slot}
-            </button>
-          ))}
+          {TIME_SLOTS.map((slot) => {
+            const isBooked = bookedSlots.includes(slot);
+            return (
+              <button
+                key={slot}
+                onClick={() => !isBooked && setSelectedSlot(slot)}
+                disabled={isBooked}
+                className={`... ${
+                  isBooked
+                    ? "opacity-40 cursor-not-allowed line-through" 
+                    : selectedSlot === slot
+                      ? "bg-cyan-500/20 border-cyan-400 text-cyan-300"
+                      : "border-white/10 text-gray-400"
+                }`}
+              >
+                <IoTimeOutline />
+                {slot} {isBooked && "(Taken)"}
+              </button>
+            );
+          })}
         </div>
 
         <button
@@ -328,6 +397,7 @@ const DoctorDetailesClient = ({
           <BookingWidget
             fee={doctor.consultationFee}
             isAvailable={doctor.isAvailable}
+            doctorId={doctor._id}
           />
         </div>
       </div>

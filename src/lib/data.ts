@@ -1,12 +1,14 @@
+import { authClient } from "./auth-client";
+
 export const getFeaturedDoctor = async () => {
-  const res = await fetch("http://localhost:5000/doctors");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/doctors`);
   const data = await res.json();
   return data;
 };
 
-export const getDoctorByID=async(id)=>{
-  const res=await fetch(`http://localhost:5000/all-doctors/${id}`)
-  const data=await res.json()
+export const getDoctorByID = async (id: string) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/all-doctors/${id}`);
+  const data = await res.json();
   return {
     ...data,
     about: data.about ?? "",
@@ -14,22 +16,36 @@ export const getDoctorByID=async(id)=>{
     reviews: data.reviews ?? [],
     isVerified: data.isVerified ?? false,
   };
-}
+};
 
-export const getAllReview=async()=>{
-  const res=await fetch("http://localhost:5000/review")
-  const data=await res.json()
-  return data;
-
-}
-
-
-export const getAllDoctors=async () => {
-  const res = await fetch("http://localhost:5000/all-doctors");
+export const getAllReview = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/review`);
   const data = await res.json();
   return data;
 };
 
+export const getTimeSlot = async (doctorId: string, selectedDate: string) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/appointments/slots/${doctorId}/${selectedDate}`,
+  );
+  const data = await res.json();
+  return data;
+};
+
+export const getAllDoctors = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/all-doctors`);
+  const data = await res.json();
+  return data;
+};
+
+export const getUserData = async () => {
+  const { data: session } = await authClient.getSession();
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/appointments/user/${session?.user.id}`,
+  );
+  const data = await res.json();
+  return data
+};
 
 export type Doctor = {
   _id: string;
@@ -44,4 +60,3 @@ export type Doctor = {
   totalReviews: number;
   isAvailable: boolean;
 };
- 

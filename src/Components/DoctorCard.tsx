@@ -70,16 +70,18 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
                 Profile
               </button>
             </Link>
-            <button
-              disabled={!doctor.isAvailable}
-              className={`text-xs px-4 py-1.5 rounded-lg font-semibold transition-colors ${
-                doctor.isAvailable
-                  ? "bg-cyan-500 text-white hover:bg-cyan-600 cursor-pointer"
-                  : "bg-gray-600 text-gray-400 cursor-not-allowed"
-              }`}
-            >
-              Book Now
-            </button>
+            <Link href={`/doctors/${id}`}>
+              <button
+                disabled={!doctor.isAvailable}
+                className={`text-xs px-4 py-1.5 rounded-lg font-semibold transition-colors ${
+                  doctor.isAvailable
+                    ? "bg-cyan-500 text-white hover:bg-cyan-600 cursor-pointer"
+                    : "bg-gray-600 text-gray-400 cursor-not-allowed"
+                }`}
+              >
+                Book Now
+              </button>
+            </Link>
           </div>
         </div>
       </div>

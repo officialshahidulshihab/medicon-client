@@ -8,6 +8,8 @@ import { HiPlus } from "react-icons/hi";
 import { IoMdMenu } from "react-icons/io";
 import { MdDashboard } from "react-icons/md";
 import { PiSignOutLight } from "react-icons/pi";
+import { useRouter } from "next/navigation";
+
 
 const Navbar = () => {
   const NAV_LINKS = [
@@ -23,12 +25,23 @@ const Navbar = () => {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  const router = useRouter();
 
   const { data: session } = authClient.useSession();
-
   const userRole = session?.user?.role;
   const onSignOut = async () => {
-    await authClient.signOut();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.refresh();
+          router.push("/signin");
+        },
+        onError: () => {
+         
+          router.push("/signin");
+        },
+      },
+    });
   };
   return (
     <nav
@@ -136,7 +149,6 @@ const Navbar = () => {
                   />
                 </button>
 
-                {/* Sign Out */}
                 <button
                   onClick={onSignOut}
                   className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors"
