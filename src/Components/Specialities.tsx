@@ -99,9 +99,18 @@ const SPECIALTIES = [
   },
 ];
 
+type Specialty = {
+  icon: React.ElementType;
+  name: string;
+  doctors: number;
+  cardBg: string;
+  border: string;
+  hoverBorder: string;
+  circleBg: string;
+  iconColor: string;
+};
 
-
-const SpecialtyCard = ({ specialty }) => {
+const SpecialtyCard = ({ specialty }: { specialty: Specialty }) => {
   const Icon = specialty.icon;
 const router = useRouter();
   

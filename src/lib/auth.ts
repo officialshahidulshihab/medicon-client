@@ -24,14 +24,13 @@ export const auth = betterAuth({
       return {
         user: {
           ...user,
-          role: user.role,
+          role: (user as unknown as { role: string }).role,
         },
         session,
       };
     }),
   ],
   database: mongodbAdapter(db, {
-    
     client,
   }),
 });

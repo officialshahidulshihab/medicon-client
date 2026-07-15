@@ -22,7 +22,7 @@ const Banner = () => {
 
   const [division, setDivision] = useState("Dhaka");
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -34,8 +34,8 @@ const Banner = () => {
   };
 
   useEffect(() => {
-    const handler = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+    const handler = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };

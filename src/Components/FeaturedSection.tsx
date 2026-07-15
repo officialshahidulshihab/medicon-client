@@ -1,9 +1,9 @@
 import { getFeaturedDoctor } from "@/lib/data";
 
 import Link from "next/link";
-import React from "react";
+
 import DoctorCard from "./DoctorCard";
-import { object } from "better-auth";
+
 
 const FeaturedSection = async () => {
   type Doctor = {
@@ -45,7 +45,7 @@ const FeaturedSection = async () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 max-w-7xl mx-auto">
-        {data.map((doctor: object, ind: number) => (
+        {data.map((doctor: Doctor, ind: number) => (
           <DoctorCard key={ind} doctor={doctor}></DoctorCard>
         ))}
       </div>

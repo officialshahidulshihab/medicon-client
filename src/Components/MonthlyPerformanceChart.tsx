@@ -13,7 +13,7 @@ type Props = { doctorId: string };
 const SKELETON_HEIGHTS = ["45%", "70%", "55%", "80%", "60%", "40%", "65%"];
 
 const ChartSkeleton = () => (
-   <div className="h-[280px] flex items-end gap-2 px-2 animate-pulse">
+  <div className="h-[280px] flex items-end gap-2 px-2 animate-pulse">
     {SKELETON_HEIGHTS.map((height, i) => (
       <div
         key={i}
@@ -58,10 +58,6 @@ const MonthlyPerformanceChart = ({ doctorId }: Props) => {
 
   const data = activeTab === "appointments" ? appointmentsData : revenueData;
 
-  
-  const formatTooltip = (value: number) =>
-    activeTab === "revenue" ? [`৳${value}K`, "Revenue"] : [value, "Appointments"];
-
   return (
     <div className="bg-[#0d1526] border border-white/10 rounded-2xl p-6 h-full">
 
@@ -98,11 +94,10 @@ const MonthlyPerformanceChart = ({ doctorId }: Props) => {
         </div>
       </div>
 
-     
+      
       {loading ? (
         <ChartSkeleton />
       ) : data.length === 0 ? (
-        
         <div className="h-[280px] flex flex-col items-center justify-center gap-2">
           <p className="text-gray-500 text-sm">No data yet</p>
           <p className="text-gray-600 text-xs">
@@ -133,14 +128,33 @@ const MonthlyPerformanceChart = ({ doctorId }: Props) => {
               axisLine={false}
               tickLine={false}
             />
+            
             <Tooltip
-              formatter={formatTooltip}
-              contentStyle={{
-                backgroundColor: "#0d1526",
-                border: "1px solid rgba(255,255,255,0.1)",
-                borderRadius: "12px",
-                color: "#fff",
-                fontSize: "13px",
+              content={({ active, payload, label }) => {
+                if (!active || !payload?.length) return null;
+                const value = payload[0]?.value;
+                const display =
+                  activeTab === "revenue" ? `৳${value}K` : String(value);
+                return (
+                  <div
+                    style={{
+                      backgroundColor: "#0d1526",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "12px",
+                      color: "#fff",
+                      fontSize: "13px",
+                      padding: "10px 14px",
+                    }}
+                  >
+                    <p style={{ color: "#6b7280", marginBottom: 4 }}>{label}</p>
+                    <p style={{ color: "#06b6d4", fontWeight: 600 }}>
+                      {display}{" "}
+                      <span style={{ color: "#6b7280", fontWeight: 400 }}>
+                        {activeTab === "revenue" ? "revenue" : "appointments"}
+                      </span>
+                    </p>
+                  </div>
+                );
               }}
             />
             <Area

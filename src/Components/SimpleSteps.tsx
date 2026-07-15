@@ -1,6 +1,6 @@
 "use client";
  
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { FiSearch } from "react-icons/fi";
 import { BsCalendar3 } from "react-icons/bs";
 import { TbCircleCheckFilled } from "react-icons/tb";
@@ -38,12 +38,14 @@ const containerVariants = {
   },
 };
  
-const itemVariants = {
-  hidden: { opacity: 0, y: 32 },
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: {
+      duration: 0.5,
+    },
   },
 };
 

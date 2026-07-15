@@ -98,8 +98,8 @@ const Navbar = () => {
                   href="/signin"
                   className="px-4 py-2 text-sm font-medium transition-colors"
                   style={{ color: "#7aafc9" }}
-                  onMouseEnter={(e) => (e.target.style.color = "#fff")}
-                  onMouseLeave={(e) => (e.target.style.color = "#7aafc9")}
+                 onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.color = "#fff")}
+onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.color = "#7aafc9")}
                 >
                   Sign In
                 </Link>
